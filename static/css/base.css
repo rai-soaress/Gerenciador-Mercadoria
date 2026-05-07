@@ -216,3 +216,39 @@ button:hover,
         padding: 16px;
     }
 }
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.container {
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 16px;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .menu {
+        position: relative;
+        width: 100%;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .item {
+        word-break: break-word;
+    }
+}
