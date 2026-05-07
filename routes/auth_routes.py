@@ -20,7 +20,9 @@ def verificar_ativacao():
 
 @auth_bp.route("/")
 def inicio():
-    if not verificar_ativacao():
+    sistema = Sistema.query.first()
+
+    if not sistema or not sistema.ativado:
         return redirect(url_for("auth.ativacao"))
 
     if Usuario.query.count() == 0:
@@ -31,7 +33,12 @@ def inicio():
 
 @auth_bp.route("/ativacao", methods=["GET", "POST"])
 def ativacao():
-    if verificar_ativacao():
+    sistema = Sistema.query.first()
+
+    if sistema and sistema.ativado and Usuario.query.count() == 0:
+        return redirect(url_for("auth.criar_admin"))
+
+    if sistema and sistema.ativado and Usuario.query.count() > 0:
         return redirect(url_for("auth.login"))
 
     if request.method == "POST":
@@ -39,7 +46,13 @@ def ativacao():
 
         if senha_digitada == os.getenv("SENHA_MESTRE"):
             sistema = Sistema.query.first()
-            sistema.ativado = True
+
+            if not sistema:
+                sistema = Sistema(ativado=True)
+                db.session.add(sistema)
+            else:
+                sistema.ativado = True
+
             db.session.commit()
 
             flash("Sistema ativado com sucesso.")
@@ -78,6 +91,9 @@ def criar_admin():
 def login():
     if not verificar_ativacao():
         return redirect(url_for("auth.ativacao"))
+
+    if Usuario.query.count() == 0:
+        return redirect(url_for("auth.criar_admin"))
 
     if request.method == "POST":
         email = request.form["email"]
@@ -147,6 +163,7 @@ def confirmar_exclusao():
         Usuario.query.delete()
 
         sistema = Sistema.query.first()
+
         if sistema:
             sistema.ativado = False
 
