@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="auth-wrapper">
+    <div class="card-login">
+        <h1>Criar Administrador</h1>
+        <p>Agora o dono do comércio cria seu próprio acesso administrativo.</p>
+
+        <form method="POST">
+            <input type="text" name="nome" placeholder="Nome do dono" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Criar Conta</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

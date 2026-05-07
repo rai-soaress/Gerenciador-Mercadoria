@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="auth-wrapper">
+    <div class="card-login">
+        <h1>Ativação do Sistema</h1>
+        <p>Digite a senha mestre fornecida pelo criador para liberar o uso do sistema.</p>
+
+        <form method="POST">
+            <input type="password" name="senha" placeholder="Senha mestre" required>
+            <button type="submit">Ativar Sistema</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

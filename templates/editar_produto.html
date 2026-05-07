@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/produtos.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<header class="page-header">
+    <div>
+        <h1>Editar Produto</h1>
+        <p>Atualize preço, estoque e informações do produto.</p>
+    </div>
+</header>
+
+<form method="POST" class="form-card">
+    <h2>Dados do produto</h2>
+
+    <input type="text" name="nome" value="{{ produto.nome }}" required>
+
+    <input type="text" name="categoria" value="{{ produto.categoria }}">
+
+    <input type="number" step="0.01" name="preco" value="{{ produto.preco }}" required>
+
+    <input type="text" name="tipo_venda" value="{{ produto.tipo_venda }}">
+
+    <input type="number" step="0.01" name="estoque" value="{{ produto.estoque }}" required>
+
+    <button type="submit">Salvar alterações</button>
+</form>
+
+<a href="{{ url_for('produto.produtos') }}" class="botao-link">
+    Voltar para produtos
+</a>
+{% endblock %}

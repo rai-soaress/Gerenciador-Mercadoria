@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="auth-wrapper">
+
+    <div class="card-login">
+
+        <h1>Recuperar senha</h1>
+
+        <p>
+            Digite o e-mail cadastrado, a senha mestre do criador e a nova senha.
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="email"
+                name="email"
+                placeholder="E-mail cadastrado"
+                required
+            >
+
+            <input
+                type="password"
+                name="senha_mestre"
+                placeholder="Senha mestre"
+                required
+            >
+
+            <input
+                type="password"
+                name="nova_senha"
+                placeholder="Nova senha"
+                required
+            >
+
+            <button type="submit">
+                Alterar senha
+            </button>
+
+        </form>
+
+        <a
+            href="{{ url_for('auth.login') }}"
+            class="link-recuperar"
+        >
+            Voltar para login
+        </a>
+
+    </div>
+
+</section>
+{% endblock %}

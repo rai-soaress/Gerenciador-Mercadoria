@@ -1,0 +1,38 @@
+.auth-wrapper {
+    min-height: 65vh;
+    display: grid;
+    place-items: center;
+}
+
+.card-login {
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(180deg, #f8fafc, #eef2ff);
+    padding: 32px;
+    border-radius: 24px;
+    border: 1px solid #dbeafe;
+    box-shadow: 0 14px 35px rgba(37, 99, 235, 0.14);
+}
+
+.card-login h1 {
+    margin-bottom: 8px;
+}
+
+.card-login form {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+.link-recuperar {
+    display: block;
+    margin-top: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.link-recuperar:hover {
+    text-decoration: underline;
+}

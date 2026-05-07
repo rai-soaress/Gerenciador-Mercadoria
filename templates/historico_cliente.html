@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/vendas.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<header class="page-header">
+    <div>
+        <h1>Histórico do cliente</h1>
+        <p>Veja compras, dívidas e registre pagamentos.</p>
+    </div>
+</header>
+
+<div class="item destaque">
+    <strong>{{ cliente.nome }}</strong><br>
+    Telefone: {{ cliente.telefone }}<br>
+    Endereço: {{ cliente.endereco }}<br>
+    Observações: {{ cliente.observacoes }}
+</div>
+
+<a href="{{ url_for('pdf.pdf_cliente', cliente_id=cliente.id) }}" class="botao-link">
+    Gerar PDF do cliente
+</a>
+
+<h2>Compras realizadas</h2>
+
+{% if vendas %}
+    {% for venda in vendas %}
+    <div class="item">
+        <strong>Venda #{{ venda.id }}</strong><br>
+
+        Data da compra: {{ venda.data_compra }}<br>
+        Prazo: {{ venda.prazo_pagamento }}<br>
+
+        Total: R$ {{ "%.2f"|format(venda.total) }}<br>
+        Pago: R$ {{ "%.2f"|format(venda.valor_pago) }}<br>
+        Restante: R$ {{ "%.2f"|format(venda.valor_restante) }}<br>
+        Status: <span class="status">{{ venda.status }}</span><br>
+
+        <br>
+        <strong>Produtos:</strong><br>
+
+        {% for item in venda.itens %}
+            - {{ item.produto_nome }} | Qtd: {{ item.quantidade }} | R$ {{ "%.2f"|format(item.subtotal) }}<br>
+        {% endfor %}
+
+        <br>
+        <strong>Pagamentos:</strong><br>
+
+        {% if venda.pagamentos %}
+            {% for pagamento in venda.pagamentos %}
+                - R$ {{ "%.2f"|format(pagamento.valor) }} em {{ pagamento.criado_em.strftime('%d/%m/%Y') }}<br>
+            {% endfor %}
+        {% else %}
+            Nenhum pagamento registrado.<br>
+        {% endif %}
+
+        <div class="acoes">
+            {% if venda.valor_restante > 0 %}
+                <a href="{{ url_for('venda.pagamentos', venda_id=venda.id) }}">
+                    Dar baixa / Registrar pagamento
+                </a>
+            {% else %}
+                <span class="quitado">Venda quitada</span>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Esse cliente ainda não possui compras.</p>
+{% endif %}
+
+<a href="{{ url_for('cliente.clientes') }}" class="botao-link">
+    Voltar para clientes
+</a>
+{% endblock %}

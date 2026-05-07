@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<header class="page-header">
+    <div>
+        <h1>Relatórios</h1>
+        <p>Consulte vendas por mês e ano.</p>
+    </div>
+</header>
+
+<form method="GET" class="form-card">
+    <label>Mês</label>
+    <input type="number" name="mes" min="1" max="12" value="{{ mes }}" required>
+
+    <label>Ano</label>
+    <input type="number" name="ano" value="{{ ano }}" required>
+
+    <button type="submit">Buscar relatório</button>
+</form>
+
+<section class="cards">
+    <div class="card">
+        <span>Total vendido</span>
+        <strong>R$ {{ "%.2f"|format(total_vendido) }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Total recebido</span>
+        <strong>R$ {{ "%.2f"|format(total_recebido) }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Total pendente</span>
+        <strong>R$ {{ "%.2f"|format(total_pendente) }}</strong>
+    </div>
+</section>
+
+<h2>Vendas do período</h2>
+
+{% if vendas %}
+    {% for venda in vendas %}
+    <div class="item">
+        Cliente: <strong>{{ venda.cliente.nome }}</strong><br>
+        Data: {{ venda.data_compra }}<br>
+        Total: R$ {{ "%.2f"|format(venda.total) }}<br>
+        Pago: R$ {{ "%.2f"|format(venda.valor_pago) }}<br>
+        Restante: R$ {{ "%.2f"|format(venda.valor_restante) }}<br>
+        Status: {{ venda.status }}
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Nenhuma venda encontrada para esse período.</p>
+{% endif %}
+{% endblock %}

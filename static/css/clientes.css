@@ -1,0 +1,54 @@
+.busca {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 18px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 25px;
+}
+
+.form-card {
+    display: grid;
+    gap: 14px;
+    background: linear-gradient(180deg, #f8fafc, #eef2ff);
+    padding: 24px;
+    border-radius: 20px;
+    border: 1px solid #dbeafe;
+    margin-bottom: 25px;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+@media (max-width: 768px) {
+    .busca {
+        grid-template-columns: 1fr;
+    }
+}
+.nome-cliente {
+    font-size: 20px;
+    font-weight: 900;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.nome-cliente:hover {
+    text-decoration: underline;
+}
+
+.cliente-card {
+    cursor: pointer;
+}
+
+.cliente-nao-encontrado {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    border-left: 5px solid #dc2626;
+}

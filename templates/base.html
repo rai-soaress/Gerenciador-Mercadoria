@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Gerenciador de Mercadoria
+    </title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- CSS BASE -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/base.css') }}"
+    >
+
+    <!-- CSS DAS PÁGINAS -->
+    {% block css %}{% endblock %}
+
+    <!-- JS -->
+    <script
+        defer
+        src="{{ url_for('static', filename='js/script.js') }}"
+    ></script>
+
+</head>
+
+<body>
+
+{% if session.get("usuario_id") %}
+
+<nav class="menu">
+
+    <a href="{{ url_for('dashboard.dashboard') }}">
+        Dashboard
+    </a>
+
+    <a href="{{ url_for('cliente.clientes') }}">
+        Clientes
+    </a>
+
+    <a href="{{ url_for('produto.produtos') }}">
+        Produtos
+    </a>
+
+    <a href="{{ url_for('venda.vendas') }}">
+        Vendas / Fiado
+    </a>
+
+    <a href="{{ url_for('relatorio.relatorios') }}">
+        Relatórios
+    </a>
+
+    <a href="{{ url_for('auth.logout') }}">
+        Sair
+    </a>
+
+    <a
+        href="{{ url_for('auth.confirmar_exclusao') }}"
+        class="link-perigo"
+    >
+        Excluir Conta
+    </a>
+
+</nav>
+
+{% endif %}
+
+<main class="container">
+
+    {% with mensagens = get_flashed_messages() %}
+
+        {% if mensagens %}
+
+            {% for msg in mensagens %}
+
+                <div class="alerta">
+                    {{ msg }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+    {% block conteudo %}{% endblock %}
+
+</main>
+
+</body>
+</html>

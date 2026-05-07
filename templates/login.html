@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="auth-wrapper">
+
+    <div class="card-login">
+
+        <h1>Login Administrativo</h1>
+
+        <p>
+            Acesse para controlar clientes, produtos, vendas e pagamentos.
+        </p>
+
+        <form method="POST">
+
+            <input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                required
+            >
+
+            <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                required
+            >
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+        <a
+            href="{{ url_for('auth.recuperar_senha') }}"
+            class="link-recuperar"
+        >
+            Esqueci minha senha
+        </a>
+
+    </div>
+
+</section>
+{% endblock %}

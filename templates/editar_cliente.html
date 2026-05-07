@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clientes.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<header class="page-header">
+    <div>
+        <h1>Editar Cliente</h1>
+        <p>Atualize nome, telefone, endereço e observações do cliente.</p>
+    </div>
+</header>
+
+<form method="POST" class="form-card">
+    <h2>Dados do cliente</h2>
+
+    <input type="text" name="nome" value="{{ cliente.nome }}" required>
+
+    <input type="text" name="telefone" value="{{ cliente.telefone }}">
+
+    <input type="text" name="endereco" value="{{ cliente.endereco }}">
+
+    <textarea name="observacoes">{{ cliente.observacoes }}</textarea>
+
+    <button type="submit">Salvar alterações</button>
+</form>
+
+<a href="{{ url_for('cliente.clientes') }}" class="botao-link">
+    Voltar para clientes
+</a>
+{% endblock %}

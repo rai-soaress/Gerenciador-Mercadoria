@@ -1,0 +1,8 @@
+flask
+flask-sqlalchemy
+pymysql
+python-dotenv
+werkzeug
+fpdf
+gunicorn
+cryptography

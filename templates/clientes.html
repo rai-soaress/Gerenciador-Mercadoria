@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/clientes.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+
+<header class="page-header">
+
+    <div>
+
+        <h1>
+            Clientes
+        </h1>
+
+        <p>
+            Pesquise clientes, visualize histórico e controle pagamentos.
+        </p>
+
+    </div>
+
+</header>
+
+<!-- BUSCA -->
+<div class="busca">
+
+    <input
+        type="text"
+        id="buscarCliente"
+        placeholder="🔍 Buscar cliente pelo nome"
+        autocomplete="off"
+    >
+
+</div>
+
+<!-- CADASTRO -->
+<form method="POST" class="form-card">
+
+    <h2>
+        Cadastrar cliente
+    </h2>
+
+    <input
+        type="text"
+        name="nome"
+        placeholder="Nome completo"
+        required
+    >
+
+    <input
+        type="text"
+        name="telefone"
+        placeholder="Telefone"
+    >
+
+    <input
+        type="text"
+        name="endereco"
+        placeholder="Endereço"
+    >
+
+    <textarea
+        name="observacoes"
+        placeholder="Observações"
+    ></textarea>
+
+    <button type="submit">
+        Cadastrar Cliente
+    </button>
+
+</form>
+
+<!-- LISTA -->
+<h2>
+    Lista de clientes
+</h2>
+
+<div id="listaClientes">
+
+{% if clientes %}
+
+    {% for cliente in clientes %}
+
+    <div class="item cliente-card cliente-item">
+
+        <!-- NOME CLICÁVEL -->
+        <a
+            href="{{ url_for('cliente.historico_cliente', cliente_id=cliente.id) }}"
+            class="nome-cliente"
+        >
+            {{ cliente.nome }}
+        </a>
+
+        <br><br>
+
+        Telefone:
+        {{ cliente.telefone }}
+
+        <br>
+
+        Endereço:
+        {{ cliente.endereco }}
+
+        <div class="acoes">
+
+            <a
+                href="{{ url_for('cliente.historico_cliente', cliente_id=cliente.id) }}"
+            >
+                Ver histórico / Dar baixa
+            </a>
+
+            <a
+                href="{{ url_for('cliente.editar_cliente', cliente_id=cliente.id) }}"
+            >
+                Editar
+            </a>
+
+            <a
+                href="{{ url_for('pdf.pdf_cliente', cliente_id=cliente.id) }}"
+            >
+                PDF
+            </a>
+
+            <a
+                href="{{ url_for('cliente.excluir_cliente', cliente_id=cliente.id) }}"
+                class="acao-perigo"
+                onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
+            >
+                Excluir
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="cliente-nao-encontrado">
+
+        Nenhum cliente encontrado.
+
+    </div>
+
+{% endif %}
+
+</div>
+
+<script>
+
+const busca = document.getElementById("buscarCliente");
+
+busca.addEventListener("keyup", function () {
+
+    const valor = busca.value.toLowerCase();
+
+    const clientes = document.querySelectorAll(".cliente-item");
+
+    let encontrou = false;
+
+    clientes.forEach(cliente => {
+
+        const nome = cliente.querySelector(".nome-cliente")
+                             .textContent
+                             .toLowerCase();
+
+        if (nome.includes(valor)) {
+
+            cliente.style.display = "block";
+            encontrou = true;
+
+        } else {
+
+            cliente.style.display = "none";
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

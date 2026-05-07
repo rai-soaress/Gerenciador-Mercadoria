@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<header class="page-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p>Resumo geral do comércio.</p>
+    </div>
+</header>
+
+<section class="cards">
+    <div class="card">
+        <span>Total vendido</span>
+        <strong>R$ {{ "%.2f"|format(total_vendido) }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Total recebido</span>
+        <strong>R$ {{ "%.2f"|format(total_recebido) }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Total pendente</span>
+        <strong>R$ {{ "%.2f"|format(total_pendente) }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Clientes</span>
+        <strong>{{ clientes }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Produtos</span>
+        <strong>{{ produtos }}</strong>
+    </div>
+
+    <div class="card">
+        <span>Inadimplentes</span>
+        <strong>{{ inadimplentes }}</strong>
+    </div>
+</section>
+
+<h2>Vendas recentes</h2>
+
+{% if vendas_recentes %}
+    {% for venda in vendas_recentes %}
+    <div class="item">
+        <strong>{{ venda.cliente.nome }}</strong><br>
+        Total: R$ {{ "%.2f"|format(venda.total) }}<br>
+        Pago: R$ {{ "%.2f"|format(venda.valor_pago) }}<br>
+        Restante: R$ {{ "%.2f"|format(venda.valor_restante) }}<br>
+        Status: <span class="status">{{ venda.status }}</span>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>Nenhuma venda registrada ainda.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block conteudo %}
+<section class="auth-wrapper">
+    <div class="card-login">
+        <h1>Confirmar exclusão</h1>
+
+        <p>
+            Essa ação vai apagar todos os clientes, produtos, vendas,
+            pagamentos e a conta administrativa.
+        </p>
+
+        <form method="POST">
+            <input
+                type="password"
+                name="senha_mestre"
+                placeholder="Digite a senha mestre"
+                required
+            >
+
+            <button type="submit" class="botao-perigo">
+                Excluir tudo definitivamente
+            </button>
+        </form>
+
+        <a href="{{ url_for('dashboard.dashboard') }}" class="link-recuperar">
+            Cancelar e voltar
+        </a>
+    </div>
+</section>
+{% endblock %}
