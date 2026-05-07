@@ -8,89 +8,38 @@
 <header class="page-header">
     <div>
         <h1>Produtos</h1>
-        <p>Controle produtos, preços e estoque.</p>
+        <p>Cadastre produtos com preço. O estoque pode ficar vazio e será salvo como zero.</p>
     </div>
 </header>
 
 <form method="POST" class="form-card">
-
     <h2>Cadastrar produto</h2>
 
-    <input
-        type="text"
-        name="nome"
-        placeholder="Nome do produto"
-        required
-    >
+    <input type="text" name="nome" placeholder="Nome do produto" required>
 
-    <input
-        type="text"
-        name="categoria"
-        placeholder="Categoria: carne, peixe, linguiça..."
-    >
+    <input type="text" name="categoria" placeholder="Categoria: carne, peixe, linguiça...">
 
-    <input
-        type="number"
-        step="0.01"
-        name="preco"
-        placeholder="Preço"
-        required
-    >
+    <input type="number" step="0.01" name="preco" placeholder="Preço" required>
 
-    <input
-        type="text"
-        name="tipo_venda"
-        placeholder="Tipo de venda: kg, unidade ou pacote"
-    >
+    <input type="text" name="tipo_venda" placeholder="Tipo de venda: kg, unidade ou pacote">
 
-    <input
-        type="number"
-        step="0.01"
-        name="estoque"
-        placeholder="Estoque"
-        required
-    >
+    <input type="number" step="0.01" name="estoque" placeholder="Estoque opcional">
 
-    <button type="submit">
-        Cadastrar Produto
-    </button>
-
+    <button type="submit">Cadastrar Produto</button>
 </form>
 
 <h2>Lista de produtos</h2>
 
 {% if produtos %}
-
     {% for produto in produtos %}
-
     <div class="item">
-
-        <strong>
-            {{ produto.nome }}
-        </strong>
-
-        <br>
-
-        Categoria:
-        {{ produto.categoria }}
-
-        <br>
-
-        Preço:
-        R$ {{ "%.2f"|format(produto.preco) }}
-
-        <br>
-
-        Tipo:
-        {{ produto.tipo_venda }}
-
-        <br>
-
-        Estoque:
-        {{ produto.estoque }}
+        <strong>{{ produto.nome }}</strong><br>
+        Categoria: {{ produto.categoria }}<br>
+        Preço: R$ {{ "%.2f"|format(produto.preco) }}<br>
+        Tipo: {{ produto.tipo_venda }}<br>
+        Estoque: {{ produto.estoque }}
 
         <div class="acoes">
-
             <a href="{{ url_for('produto.editar_produto', produto_id=produto.id) }}">
                 Editar
             </a>
@@ -102,17 +51,10 @@
             >
                 Excluir
             </a>
-
         </div>
-
     </div>
-
     {% endfor %}
-
 {% else %}
-
     <p>Nenhum produto cadastrado.</p>
-
 {% endif %}
-
 {% endblock %}

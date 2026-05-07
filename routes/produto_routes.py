@@ -21,7 +21,7 @@ def produtos():
             categoria=request.form["categoria"],
             preco=float(request.form["preco"]),
             tipo_venda=request.form["tipo_venda"],
-            estoque=float(request.form["estoque"])
+            estoque=float(request.form["estoque"] or 0)
         )
 
         db.session.add(produto)
@@ -31,7 +31,6 @@ def produtos():
         return redirect(url_for("produto.produtos"))
 
     lista = Produto.query.order_by(Produto.nome).all()
-
     return render_template("produtos.html", produtos=lista)
 
 
@@ -47,7 +46,7 @@ def editar_produto(produto_id):
         produto.categoria = request.form["categoria"]
         produto.preco = float(request.form["preco"])
         produto.tipo_venda = request.form["tipo_venda"]
-        produto.estoque = float(request.form["estoque"])
+        produto.estoque = float(request.form["estoque"] or 0)
 
         db.session.commit()
 
@@ -64,9 +63,7 @@ def excluir_produto(produto_id):
 
     produto = Produto.query.get_or_404(produto_id)
 
-    produto_em_venda = ItemVenda.query.filter_by(
-        produto_id=produto.id
-    ).first()
+    produto_em_venda = ItemVenda.query.filter_by(produto_id=produto.id).first()
 
     if produto_em_venda:
         flash("Não é possível excluir este produto porque ele já possui vendas registradas.")
